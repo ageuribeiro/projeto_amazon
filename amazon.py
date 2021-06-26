@@ -1,10 +1,11 @@
 #importando as bibliotecas necess?rias
 from urllib.request import urlopen
+from urllib.error import HTTPError
 from bs4 import BeautifulSoup
 import pandas as pd
 import csv
 
-# endere?o URL dos dispositivos iphone no site da amazon
+# endereço URL dos dispositivos iphone no site da amazon
 url = 'https://www.amazon.com/s?k=iphone&ref=nb_sb_noss_2'
 
 #variavel para armazenar e abrir a url
@@ -12,7 +13,24 @@ html = urlopen(url)
 
 #iniciando o objeto bs4
 bsObj = BeautifulSoup(html, 'lxml')
+def getTitle(url):
+    try:
+       html
+    except HTTPError as e:
+        return None
+    try:
+        bsObj
+        title = bsObj.body.h1
+    except AttributeError as e:
+        return None
+    return title
 
+title = getTitle(url)
+
+if title == None:
+    print("Title could not be found")
+else:
+    print(title)
 # criar array para os nomes dos iphones
 device = []
 
